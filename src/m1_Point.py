@@ -101,7 +101,7 @@ def main():
 # DONE: 2.          With your instructor, READ THE INSTRUCTIONS in
 # DONE (continued)  in file  m0_INSTRUCTIONS.txt, asking questions as needed.
 #
-# DONE (continued): Then implement a class called   Point that has NO METHODS
+# DONE (continued): Then implement a class called   Point that has O METHODS
 # DONE (continued)  yet, just the lines that start the definition of any class:
 #
 #      class NAME_OF_CLASS(object):
