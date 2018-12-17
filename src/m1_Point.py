@@ -14,6 +14,9 @@ class Point(object):
         self.a = x
         self.b = y
         self.number =0
+        self.dist_traveled = 0
+
+
 
     def __repr__(self):
         return "Point({}, {})".format(self.x, self.y)
@@ -22,7 +25,7 @@ class Point(object):
         return Point(self.x, self.y)
 
     def move_to(self, x, y):
-        self.dist_traveled += 
+        self.dist_traveled += ((self.x - x) ** 2 + (self.y - y) ** 2) ** 0.5
         self.x = x
         self.y = y
         self.c = x
@@ -31,11 +34,12 @@ class Point(object):
         self.number = self.number + 1
 
     def move_by(self, dx, dy):
+        self.e = self.x
+        self.f = self.y
         self.x = self.x + dx
         self.y = self.y + dy
-        self.e = self.x + dx
-        self.f = self.y + dy
-        number = 0
+        self.dist_traveled += ((self.x - dx) ** 2 + (dy - self.y) ** 2) ** 0.5
+
         self.number = self.number + 1
 
     def get_number_of_moves_made(self):
@@ -53,8 +57,8 @@ class Point(object):
 
     def closer_to(self, object1, object2):
         a = (((self.x - object1.x) ** 2) + ((self.y - object1.y) ** 2)) ** 0.5
-        b =  (((self.x - object2.x) ** 2) + ((self.y - object2.y) ** 2)) ** 0.5
-        if a >= b :
+        b = (((self.x - object2.x) ** 2) + ((self.y - object2.y) ** 2)) ** 0.5
+        if b >= a :
             return object1
         else:
             return object2
@@ -159,7 +163,7 @@ def run_test_init():
         print('Actual for p2:  ', p2.x, p2.y)
     """
     # -------------------------------------------------------------------------
-    # TODO: 3.
+    # DONE: 3.
     #   a. Read the above specification of the   __init__   method.
     #        Do NOT proceed until you understand WHAT it should do
     #        (but not necessarily HOW it will do it).
@@ -249,7 +253,7 @@ def run_test_repr():
         print('Actual for p2:  ', p2)
     """
     # -------------------------------------------------------------------------
-    # TODO: 4.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 4.  Follow the same instructions as in _TODO_ 3 above,
     #           but for the  __repr__  method specified above.
     # -------------------------------------------------------------------------
     print()
@@ -329,7 +333,7 @@ def run_test_clone():
         print('Actual for p3:  ', p3)
    """
     # -------------------------------------------------------------------------
-    # TODO: 5.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 5.  Follow the same instructions as in _TODO_ 3 above,
     #           but for the  clone  method specified above.
     # -------------------------------------------------------------------------
     print()
@@ -427,7 +431,7 @@ def run_test_move_to():
             print('** value; in fact, it returned:', check_has_no_return)
     """
     # -------------------------------------------------------------------------
-    # TODO: 6.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 6.  Follow the same instructions as in _TODO_ 3 above,
     #           but for the  move_to  method specified above.
     # -------------------------------------------------------------------------
     print()
@@ -523,7 +527,7 @@ def run_test_move_by():
             print('** value; in fact, it returned:', check_has_no_return)
         """
     # -------------------------------------------------------------------------
-    # TODO: 7.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 7.  Follow the same instructions as in _TODO_ 3 above,
     #           but for the  move_by  method specified above.
     # -------------------------------------------------------------------------
     print()
@@ -631,9 +635,9 @@ def run_test_get_number_of_moves_made():
         print('Actual for p2 moves made:  ', p2.get_number_of_moves_made())
     """
     # -------------------------------------------------------------------------
-    # TODO: 8.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 8.  Follow the same instructions as in _TODO_ 3 above,
     #    but for the  get_number_of_moves_made  method specified above.
-    # TODO (continued):  HINT: What must a Point REMEMBER for this method?
+    # DONE (continued):  HINT: What must a Point REMEMBER for this method?
     # -------------------------------------------------------------------------
     print()
     print('-----------------------------------------------------------')
@@ -748,7 +752,7 @@ def run_test_get_distance_from():
         print('Actual   p2 to p4:', p2.get_distance_from(p4))
     """
     # -------------------------------------------------------------------------
-    # TODO: 9.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 9.  Follow the same instructions as in _TODO_ 3 above,
     #    but for the  get_distance_from  method specified above.
     # -------------------------------------------------------------------------
     print()
@@ -842,7 +846,7 @@ def run_test_get_distance_from_start():
         print('Actually is:', p2.get_distance_from_start())
     """
     # -------------------------------------------------------------------------
-    # TODO: 10.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 10.  Follow the same instructions as in _TODO_ 3 above,
     #    but for the  get_distance_from_START  method specified above.
     # -------------------------------------------------------------------------
     print()
@@ -925,7 +929,7 @@ def run_test_get_distance_traveled():
         print('Actual:', p4.get_distance_traveled())
     """
     # -------------------------------------------------------------------------
-    # TODO: 11.  Follow the same instructions as in _TODO_ 3 above,
+    # DONE: 11.  Follow the same instructions as in _TODO_ 3 above,
     #    but for the  get_distance_traveled  method specified above.
     # -------------------------------------------------------------------------
     print()
@@ -933,6 +937,34 @@ def run_test_get_distance_traveled():
     print('Testing the   get_distance_traveled   method')
     print('of the Point class.')
     print('-----------------------------------------------------------')
+
+    p1 = Point(20, 30)
+    p1.move_to(21, 30)
+    p1.move_to(21, 38)
+    print()
+    print('Expected p1 has traveled 9.0')
+    print('Actual:', p1.get_distance_traveled())
+
+    p1.move_by(1, 1)
+    print()
+    print('Expected p1 has now traveled about 10.414')
+    print('Actual:', p1.get_distance_traveled())
+
+    p2 = Point(0, 0)
+    p3 = Point(100, 22)
+    p4 = Point(0, 555)
+    for k in range(100):
+        p2.move_by(0, k + 1)
+        p3.move_by(k + 1, 0)
+        p4.move_to(k + 1, 555)
+
+    print()
+    print('Expected p2 has now traveled', 101 * 50.0)
+    print('Actual:', p2.get_distance_traveled())
+    print('Expected p3 has now traveled', 101 * 50.0)
+    print('Actual:', p3.get_distance_traveled())
+    print('Expected p4 has now traveled 100.0')
+    print('Actual:', p4.get_distance_traveled())
 
 
 def run_test_closer_to():
@@ -982,13 +1014,41 @@ def run_test_closer_to():
         print('Actual:  ', p1.closer_to(p4, p5) is p5)
     """
     # -------------------------------------------------------------------------
-    # TODO: 12.  Follow the same instructions as in TO-DO 3 above,
+    # DONE: 12.  Follow the same instructions as in TO-DO 3 above,
     #    but for the  closer_to  method specified above.
     # -------------------------------------------------------------------------
     print()
     print('-----------------------------------------------------------')
     print('Testing the   closer_to   method of the Point class.')
     print('-----------------------------------------------------------')
+
+    p1 = Point(10, 20)
+    p2 = Point(15, 20)
+    p3 = Point(14, 24)
+
+    print()
+    print('Expected:', p2)
+    print('Actual:  ', p1.closer_to(p2, p3))
+    print('Expected:', p2)
+    print('Actual:  ', p1.closer_to(p3, p2))
+
+    print()
+    print('Expected:', p1)
+    print('Actual:  ', p1.closer_to(p1, p3))
+    print('Expected:', p2)
+    print('Actual:  ', p2.closer_to(p3, p2))
+    print('Expected:', p3)
+    print('Actual:  ', p3.closer_to(p3, p3))
+
+    print()
+    p4 = p1.clone()
+    p5 = p1.clone()
+    print('Expected:', p4)
+    print('Actual:  ', p1.closer_to(p4, p5))
+    print('Expected: True')
+    print('Actual:  ', p1.closer_to(p4, p5) is p4)
+    print('Expected: False')
+    print('Actual:  ', p1.closer_to(p4, p5) is p5)
 
 
 def run_test_halfway_to():
@@ -1038,13 +1098,39 @@ def run_test_halfway_to():
 
     """
     # -------------------------------------------------------------------------
-    # TODO: 13.  Follow the same instructions as in TO-DO 3 above,
+    # DONE: 13.  Follow the same instructions as in TO-DO 3 above,
     #    but for the  halfway_to  method specified above.
     # -------------------------------------------------------------------------
     print()
     print('-----------------------------------------------------------')
     print('Testing the   halfway_to   method of the Point class.')
     print('-----------------------------------------------------------')
+
+    p1 = Point(10, 20)
+    p2 = Point(30, 100)
+
+    print()
+    print('Should be: Point(20.0, 60.0)')
+    print('Actual is:', p1.halfway_to(p2))
+    print('Should be: Point(20.0, 60.0)')
+    print('Actual is:', p2.halfway_to(p1))
+
+    print()
+    print('Should be: Point(10.0, 20.0)')
+    print('Actual is:', p1.halfway_to(p1))
+
+    p3 = Point(-10, 20)
+    p4 = Point(30, -100)
+
+    print()
+    print('Should be: Point(10.0, -40.0)')
+    print('Actual is:', p3.halfway_to(p4))
+    print('Should be: Point(10.0, -40.0)')
+    print('Actual is:', p3.halfway_to(p4))
+
+    print()
+    print('Should be: Point(-10.0, 20.0)')
+    print('Actual is:', p3.halfway_to(p3))
 
 
 # -----------------------------------------------------------------------------
