@@ -11,6 +11,8 @@ class Point(object):
     def __init__(self,x ,y):
         self.x = x
         self.y = y
+        self.a = x
+        self.b = y
         self.number =0
 
     def __repr__(self):
@@ -20,14 +22,19 @@ class Point(object):
         return Point(self.x, self.y)
 
     def move_to(self, x, y):
+        self.dist_traveled += 
         self.x = x
         self.y = y
+        self.c = x
+        self.d = y
 
         self.number = self.number + 1
 
     def move_by(self, dx, dy):
         self.x = self.x + dx
         self.y = self.y + dy
+        self.e = self.x + dx
+        self.f = self.y + dy
         number = 0
         self.number = self.number + 1
 
@@ -35,12 +42,33 @@ class Point(object):
         return self.number
 
     def get_distance_from(self, object):
-        pppt = (((self.x - object.x) ** 2) + ((self.y - object.y) ** 2)) ** 0.5
-        return pppt
+        return (((self.x - object.x) ** 2) + ((self.y - object.y) ** 2)) ** 0.5
 
-    def get_distance_from_start():
-        if self.number =0:
-            
+    def get_distance_from_start(self):
+        return ((self.x - self.a) ** 2 + (self.y - self.b) ** 2) ** 0.5
+
+    def get_distance_traveled(self):
+        return self.dist_traveled
+
+
+    def closer_to(self, object1, object2):
+        a = (((self.x - object1.x) ** 2) + ((self.y - object1.y) ** 2)) ** 0.5
+        b =  (((self.x - object2.x) ** 2) + ((self.y - object2.y) ** 2)) ** 0.5
+        if a >= b :
+            return object1
+        else:
+            return object2
+
+    def halfway_to(self, object1):
+        x = (self.x + object1.x) / 2
+        y = (self.y + object1.y) / 2
+        return "Point({}, {})".format(x, y)
+
+
+
+
+
+
 
 
 
